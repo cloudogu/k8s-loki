@@ -1,6 +1,6 @@
 apiVersion: v2
 name: k8s-loki
-description: A Helm chart for Kubernetes
+description: Loki is a horizontally-scalable, highly-available, multi-tenant log aggregation system.
 type: application
 version: 0.0.0-replaceme
 appVersion: "0.0.0-replaceme"
