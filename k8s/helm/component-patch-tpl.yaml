@@ -1,0 +1,41 @@
+apiVersion: v1
+
+values:
+  images:
+    loki:
+      kubectl: bitnami/kubectl:1.28.4
+      image: grafana/loki:2.9.1
+    monitoring:
+      lokiCanary: grafana/loki-canary:2.9.1
+    gateway:
+      image: nginxinc/nginx-unprivileged:1.23-alpine
+    sidecar:
+      image: kiwigrid/k8s-sidecar:1.24.3
+
+
+patches:
+  values.yaml:
+    loki:
+      kubectlImage:
+        registry: "{{ registryFrom .images.loki.kubectl }}"
+        repository: "{{ repositoryFrom .images.loki.kubectl }}"
+        tag: "{{ tagFrom .images.loki.kubectl }}"
+      image:
+        registry: "{{ registryFrom .images.loki.image }}"
+        repository: "{{ repositoryFrom .images.loki.image }}"
+        tag: "{{ tagFrom .images.loki.image }}"
+    monitoring:
+      lokiCanary:
+        registry: "{{ registryFrom .images.monitoring.lokiCanary }}"
+        repository: "{{ repositoryFrom .images.monitoring.lokiCanary }}"
+        tag: "{{ tagFrom .images.monitoring.lokiCanary }}"
+    gateway:
+      image:
+        registry: "{{ registryFrom .images.gateway.image }}"
+        repository: "{{ repositoryFrom .images.gateway.image }}"
+        tag: "{{ tagFrom .images.gateway.image }}"
+    sidecar:
+      image:
+        registry: "{{ registryFrom .images.sidecar.image }}"
+        repository: "{{ repositoryFrom .images.sidecar.image }}"
+        tag: "{{ tagFrom .images.sidecar.image }}"
