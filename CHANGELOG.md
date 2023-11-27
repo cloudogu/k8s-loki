@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- [#2] Add patch templates for using the chart in
+- [#2] Add patch templates for using the chart in airgapped environments.
 
 ## [v2.9.1-2] - 2023-09-27
 ### Fixed
