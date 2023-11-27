@@ -1,0 +1,10 @@
+loki:
+  kubectlImage:
+    registry: docker.io
+    repository: bitnami/kubectl
+    tag: 1.28.4
+  loki:
+    image:
+      registry: docker.io
+      repository: grafana/loki
+      tag: 2.9.1
