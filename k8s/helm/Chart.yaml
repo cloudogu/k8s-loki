@@ -8,3 +8,8 @@ dependencies:
   - name: loki
     version: 5.23.0
     repository: https://grafana.github.io/helm-charts
+
+annotations:
+  # For k8s-minio it is important to include "prerelease"-versions like "2023.9.23-2", so there must be a "-0" after the patch-version.
+  # see https://helm.sh/docs/chart_best_practices/dependencies/#prerelease-versions for more information
+  "k8s.cloudogu.com/ces-dependency/k8s-minio": "^2023.9.23-0"
