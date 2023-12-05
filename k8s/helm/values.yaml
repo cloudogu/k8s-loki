@@ -2,8 +2,13 @@ lokiGatewaySecretName: "k8s-loki-gateway-secret"
 
 loki:
   nameOverride: "k8s-loki"
+  kubectlImage:
+    registry: docker.io
+    repository: bitnami/kubectl
+    tag: 1.28.4
   # Loki Write, Read and Backend are setting environment variables to for the minio access keys.
   write:
+    replicas: 1
     extraArgs:
       - '-config.expand-env=true'
     extraEnv:
@@ -20,6 +25,7 @@ loki:
     persistence:
       size: 1Gi
   read:
+    replicas: 1
     extraArgs:
       - '-config.expand-env=true'
     extraEnv:
@@ -34,6 +40,7 @@ loki:
             name: k8s-minio-service-account-loki
             key: accessKeySecret
   backend:
+    replicas: 1
     extraArgs:
       - '-config.expand-env=true'
     extraEnv:
