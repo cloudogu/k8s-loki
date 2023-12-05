@@ -1,39 +1,33 @@
 apiVersion: v1
 values:
   images:
-    loki:
-      kubectl: docker.io/bitnami/kubectl:1.28.4
-      image: docker.io/grafana/loki:2.9.1
-    monitoring:
-      lokiCanary: grafana/loki-canary:2.9.1
-    gateway:
-      image: docker.io/nginxinc/nginx-unprivileged:1.23-alpine
-    sidecar:
-      image:
-        registryRepo: kiwigrid/k8s-sidecar
-        tag: 1.24.3
+    kubectl: docker.io/bitnami/kubectl:1.28.4
+    loki: docker.io/grafana/loki:2.9.1
+    monitoring: docker.io/grafana/loki:2.9.1
+    gateway: docker.io/nginxinc/nginx-unprivileged:1.23-alpine
+    sidecar: kiwigrid/k8s-sidecar:1.24.3
 patches:
   values.yaml:
     loki:
       kubectlImage:
-        registry: "{{ registryFrom .images.loki.kubectl }}"
-        repository: "{{ repositoryFrom .images.loki.kubectl }}"
-        tag: "{{ tagFrom .images.loki.kubectl }}"
+        registry: "{{ registryFrom .images.kubectl }}"
+        repository: "{{ repositoryFrom .images.kubectl }}"
+        tag: "{{ tagFrom .images.kubectl }}"
       image:
-        registry: "{{ registryFrom .images.loki.image }}"
-        repository: "{{ repositoryFrom .images.loki.image }}"
-        tag: "{{ tagFrom .images.loki.image }}"
+        registry: "{{ registryFrom .images.loki }}"
+        repository: "{{ repositoryFrom .images.loki }}"
+        tag: "{{ tagFrom .images.loki }}"
     monitoring:
       lokiCanary:
-        registry: "{{ registryFrom .images.monitoring.lokiCanary }}"
-        repository: "{{ repositoryFrom .images.monitoring.lokiCanary }}"
-        tag: "{{ tagFrom .images.monitoring.lokiCanary }}"
+        registry: "{{ registryFrom .images.monitoring }}"
+        repository: "{{ repositoryFrom .images.monitoring }}"
+        tag: "{{ tagFrom .images.monitoring }}"
     gateway:
       image:
-        registry: "{{ registryFrom .images.gateway.image }}"
-        repository: "{{ repositoryFrom .images.gateway.image }}"
-        tag: "{{ tagFrom .images.gateway.image }}"
+        registry: "{{ registryFrom .images.gateway }}"
+        repository: "{{ repositoryFrom .images.gateway }}"
+        tag: "{{ tagFrom .images.gateway }}"
     sidecar:
       image:
-        repository: "{{ .images.sidecar.image.registryRepo }}"
-        tag: "{{ tagFrom .images.sidecar.image.tag }}"
+        repository: "{{ registryFrom .images.sidecar }}/{{ repositoryFrom .images.sidecar }}"
+        tag: "{{ tagFrom .images.sidecar }}"

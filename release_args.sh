@@ -34,19 +34,19 @@ update_versions_modify_files() {
   lokiKubectlRegistry=$(yq '.loki.kubectlImage.registry' < "${lokiValues}")
   lokiKubectlRepo=$(yq '.loki.kubectlImage.repository' < "${lokiValues}")
   lokiKubectlTag=$(yq '.loki.kubectlImage.tag' < "${lokiValues}")
-  setAttributeInComponentPatchTemplate ".values.images.loki.kubectl" "${lokiKubectlRegistry}/${lokiKubectlRepo}:${lokiKubectlTag}"
+  setAttributeInComponentPatchTemplate ".values.images.kubectl" "${lokiKubectlRegistry}/${lokiKubectlRepo}:${lokiKubectlTag}"
 
   local lokiImageRegistry
   local lokiImageRepo
   lokiImageRegistry=$(yq '.loki.image.registry' < "${lokiTempValues}")
   lokiImageRepo=$(yq '.loki.image.repository' < "${lokiTempValues}")
-  setAttributeInComponentPatchTemplate ".values.images.loki.image" "${lokiImageRegistry}/${lokiImageRepo}:${lokiAppVersion}"
+  setAttributeInComponentPatchTemplate ".values.images.loki" "${lokiImageRegistry}/${lokiImageRepo}:${lokiAppVersion}"
 
   local lokiCanaryRegistry
   local lokiCanaryRepo
   lokiCanaryRegistry=$(yq '.loki.monitoring.lokiCanary.image.registry' < "${lokiTempValues}")
   lokiCanaryRepo=$(yq '.loki.monitoring.lokiCanary.image.repository' < "${lokiTempValues}")
-  setAttributeInComponentPatchTemplate ".values.images.loki.image" "${lokiImageRegistry}/${lokiImageRepo}:${lokiAppVersion}"
+  setAttributeInComponentPatchTemplate ".values.images.monitoring" "${lokiImageRegistry}/${lokiImageRepo}:${lokiAppVersion}"
 
   local lokiGatewayRegistry
   local lokiGatewayRepo
@@ -54,14 +54,13 @@ update_versions_modify_files() {
   lokiGatewayRegistry=$(yq '.gateway.image.registry' < "${lokiTempValues}")
   lokiGatewayRepo=$(yq '.gateway.image.repository' < "${lokiTempValues}")
   lokiGatewayTag=$(yq '.gateway.image.tag' < "${lokiTempValues}")
-  setAttributeInComponentPatchTemplate ".values.images.gateway.image" "${lokiGatewayRegistry}/${lokiGatewayRepo}:${lokiGatewayTag}"
+  setAttributeInComponentPatchTemplate ".values.images.gateway" "${lokiGatewayRegistry}/${lokiGatewayRepo}:${lokiGatewayTag}"
 
   local lokiSidecarRegistryRepo
   local lokiSidecarTag
   lokiSidecarRegistryRepo=$(yq '.sidecar.image.repository' < "${lokiTempValues}")
   lokiSidecarTag=$(yq '.sidecar.image.tag' < "${lokiTempValues}")
-  setAttributeInComponentPatchTemplate ".values.images.sidecar.image.registryRepo" "${lokiSidecarRegistryRepo}"
-  setAttributeInComponentPatchTemplate ".values.images.sidecar.image.tag" "${lokiSidecarTag}"
+  setAttributeInComponentPatchTemplate ".values.images.sidecar" "${lokiSidecarRegistryRepo}:${lokiSidecarTag}"
 
   rm -rf ${lokiTempChart}
 }
@@ -76,5 +75,3 @@ setAttributeInComponentPatchTemplate() {
 update_versions_stage_modified_files() {
   git add "${componentTemplateFile}"
 }
-
-update_versions_modify_files
