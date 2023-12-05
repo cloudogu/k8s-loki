@@ -1,18 +1,17 @@
 apiVersion: v1
-
 values:
   images:
     loki:
-      kubectl: bitnami/kubectl:1.28.4
-      image: grafana/loki:2.9.1
+      kubectl: docker.io/bitnami/kubectl:1.28.4
+      image: docker.io/grafana/loki:2.9.1
     monitoring:
       lokiCanary: grafana/loki-canary:2.9.1
     gateway:
-      image: nginxinc/nginx-unprivileged:1.23-alpine
+      image: docker.io/nginxinc/nginx-unprivileged:1.23-alpine
     sidecar:
-      image: kiwigrid/k8s-sidecar:1.24.3
-
-
+      image:
+        registryRepo: kiwigrid/k8s-sidecar
+        tag: 1.24.3
 patches:
   values.yaml:
     loki:
@@ -36,6 +35,5 @@ patches:
         tag: "{{ tagFrom .images.gateway.image }}"
     sidecar:
       image:
-        registry: "{{ registryFrom .images.sidecar.image }}"
-        repository: "{{ repositoryFrom .images.sidecar.image }}"
-        tag: "{{ tagFrom .images.sidecar.image }}"
+        repository: "{{ .images.sidecar.image.registryRepo }}"
+        tag: "{{ tagFrom .images.sidecar.image.tag }}"
