@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [v2.9.1-3] - 2023-12-06
 ### Added
 - [#2] Add patch templates for using the chart in airgapped environments.
 - [#4] Add default configuration for using k8s-minio and add shared secrets k8s-promtail to send data to k8s-loki
