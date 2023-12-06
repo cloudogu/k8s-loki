@@ -1,11 +1,129 @@
+lokiGatewaySecretName: "k8s-loki-gateway-secret"
+
 loki:
+  nameOverride: "k8s-loki"
   kubectlImage:
     registry: docker.io
     repository: bitnami/kubectl
     tag: 1.28.4
+  # Loki Write, Read and Backend are setting environment variables to for the minio access keys.
   write:
     replicas: 1
+    extraArgs:
+      - '-config.expand-env=true'
+    extraEnv:
+      - name: MINIO_LOKI_ACCESS_KEY_ID
+        valueFrom:
+          secretKeyRef:
+            name: k8s-minio-service-account-loki
+            key: accessKeyId
+      - name: MINIO_LOKI_SECRET_ACCESS_KEY
+        valueFrom:
+          secretKeyRef:
+            name: k8s-minio-service-account-loki
+            key: accessKeySecret
+    persistence:
+      size: 1Gi
   read:
     replicas: 1
+    extraArgs:
+      - '-config.expand-env=true'
+    extraEnv:
+      - name: MINIO_LOKI_ACCESS_KEY_ID
+        valueFrom:
+          secretKeyRef:
+            name: k8s-minio-service-account-loki
+            key: accessKeyId
+      - name: MINIO_LOKI_SECRET_ACCESS_KEY
+        valueFrom:
+          secretKeyRef:
+            name: k8s-minio-service-account-loki
+            key: accessKeySecret
   backend:
     replicas: 1
+    extraArgs:
+      - '-config.expand-env=true'
+    extraEnv:
+      - name: MINIO_LOKI_ACCESS_KEY_ID
+        valueFrom:
+          secretKeyRef:
+            name: k8s-minio-service-account-loki
+            key: accessKeyId
+      - name: MINIO_LOKI_SECRET_ACCESS_KEY
+        valueFrom:
+          secretKeyRef:
+            name: k8s-minio-service-account-loki
+            key: accessKeySecret
+    persistence:
+      size: 1Gi
+
+  # Loki configuration.
+  loki:
+    podLabels:
+      app: ces
+    storage:
+      #      chunks seems to be the important one, but it is good practice to set all three.
+      bucketNames:
+        chunks: loki-log-bucket
+        admin: loki-log-bucket
+        ruler: loki-log-bucket
+      #     configure storage option (minio in this case).
+      type: s3
+      s3:
+        s3: null
+        endpoint: http://k8s-minio.ecosystem.svc:9000
+        region: null
+        s3ForcePathStyle: true
+        insecure: true
+        accessKeyId: ${MINIO_LOKI_ACCESS_KEY_ID}
+        secretAccessKey: ${MINIO_LOKI_SECRET_ACCESS_KEY}
+    #   Relevant for multi-tenant mode
+    auth_enabled: false
+  #   Enable basic authentication in the Gateway and get the credentials from the provided secret. The credentials must
+  #   be encrypted with htpasswd and base64-encoded as follows:
+  #   echo "<PASSWORD>" | htpasswd -n -i <USERNAME> | base64 ; echo
+  #   Fill the "data -> .htpasswd" field in the secret with the corresponding value.
+  gateway:
+    basicAuth:
+      enabled: true
+      existingSecret: k8s-loki-gateway-secret
+  monitoring:
+    #   Activates the Grafana agent to enable self-monitoring. However, it does not currently work with authentication
+    #   (see: https://github.com/grafana/loki/issues/10873 ). With the configuration below, a working client is created, but
+    #   another client without authentication information continues to be created automatically, filling the logs with 401
+    #   errors.
+    selfMonitoring:
+      enabled: false
+    #      logsInstance:
+    #        clients:
+    #          - url: http://k8s-loki-gateway.ecosystem.svc.cluster.local/loki/api/v1/push
+    #            basicAuth:
+    #              username:
+    #                name: k8s-loki-gateway-secret
+    #                key: username
+    #              password:
+    #                name: k8s-loki-gateway-secret
+    #                key: password
+
+    #   Loki Canary is a standalone app that audits the log-capturing performance of a Grafana Loki cluster.
+    #   Loki Canary generates artificial log lines. These log lines are sent to the Loki cluster.
+    lokiCanary:
+      podLabels:
+        app: ces
+      extraEnv:
+        - name: USER
+          valueFrom:
+            secretKeyRef:
+              name: k8s-loki-gateway-secret
+              key: username
+        - name: PASS
+          valueFrom:
+            secretKeyRef:
+              name: k8s-loki-gateway-secret
+              key: password
+      extraArgs:
+        - "-user=$(USER)"
+        - "-pass=$(PASS)"
+  # A test to check the Loki-Logging-Stack functionality. Only works with self monitoring enabled.
+  test:
+    enabled: false
