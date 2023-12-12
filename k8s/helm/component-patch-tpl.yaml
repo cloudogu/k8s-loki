@@ -6,6 +6,7 @@ values:
     monitoring: docker.io/grafana/loki:2.9.1
     gateway: docker.io/nginxinc/nginx-unprivileged:1.23-alpine
     sidecar: kiwigrid/k8s-sidecar:1.24.3
+    grafanaAgentOp: docker.io/grafana/agent-operator:v0.34.1
 patches:
   values.yaml:
     loki:
@@ -13,21 +14,27 @@ patches:
         registry: "{{ registryFrom .images.kubectl }}"
         repository: "{{ repositoryFrom .images.kubectl }}"
         tag: "{{ tagFrom .images.kubectl }}"
-      image:
-        registry: "{{ registryFrom .images.loki }}"
-        repository: "{{ repositoryFrom .images.loki }}"
-        tag: "{{ tagFrom .images.loki }}"
-    monitoring:
-      lokiCanary:
-        registry: "{{ registryFrom .images.monitoring }}"
-        repository: "{{ repositoryFrom .images.monitoring }}"
-        tag: "{{ tagFrom .images.monitoring }}"
-    gateway:
-      image:
-        registry: "{{ registryFrom .images.gateway }}"
-        repository: "{{ repositoryFrom .images.gateway }}"
-        tag: "{{ tagFrom .images.gateway }}"
-    sidecar:
-      image:
-        repository: "{{ registryFrom .images.sidecar }}/{{ repositoryFrom .images.sidecar }}"
-        tag: "{{ tagFrom .images.sidecar }}"
+      loki:
+        image:
+          registry: "{{ registryFrom .images.loki }}"
+          repository: "{{ repositoryFrom .images.loki }}"
+          tag: "{{ tagFrom .images.loki }}"
+      monitoring:
+        lokiCanary:
+          image:
+            registry: "{{ registryFrom .images.monitoring }}"
+            repository: "{{ repositoryFrom .images.monitoring }}"
+            tag: "{{ tagFrom .images.monitoring }}"
+      gateway:
+        image:
+          registry: "{{ registryFrom .images.gateway }}"
+          repository: "{{ repositoryFrom .images.gateway }}"
+          tag: "{{ tagFrom .images.gateway }}"
+      sidecar:
+        image:
+          repository: "{{ registryFrom .images.sidecar }}/{{ repositoryFrom .images.sidecar }}"
+          tag: "{{ tagFrom .images.sidecar }}"
+      grafana-agent-operator:
+        registry: "{{ registryFrom .images.grafanaAgentOp }}"
+        repository: "{{ repositoryFrom .images.grafanaAgentOp }}"
+        tag: "{{ tagFrom .images.grafanaAgentOp }}"
