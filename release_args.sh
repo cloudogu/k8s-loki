@@ -46,9 +46,9 @@ update_versions_modify_files() {
 
   local lokiCanaryRegistry
   local lokiCanaryRepo
-  lokiCanaryRegistry=$(yq '.loki.monitoring.lokiCanary.image.registry' < "${lokiTempValues}")
-  lokiCanaryRepo=$(yq '.loki.monitoring.lokiCanary.image.repository' < "${lokiTempValues}")
-  setAttributeInComponentPatchTemplate ".values.images.monitoring" "${lokiImageRegistry}/${lokiImageRepo}:${lokiAppVersion}"
+  lokiCanaryRegistry=$(yq '.monitoring.lokiCanary.image.registry' < "${lokiTempValues}")
+  lokiCanaryRepo=$(yq '.monitoring.lokiCanary.image.repository' < "${lokiTempValues}")
+  setAttributeInComponentPatchTemplate ".values.images.lokiCanary" "${lokiCanaryRegistry}/${lokiCanaryRepo}:${lokiAppVersion}"
 
   local lokiGatewayRegistry
   local lokiGatewayRepo
