@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.9.1-4] - 2023-12-13
+### Fixed
+- [#6] Fix structure of patch templates and add missing image for grafana operator.
+
 ## [v2.9.1-3] - 2023-12-06
 ### Added
 - [#2] Add patch templates for using the chart in airgapped environments.

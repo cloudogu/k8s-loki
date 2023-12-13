@@ -59,6 +59,9 @@ loki:
 
   # Loki configuration.
   loki:
+    commonConfig:
+      # set to 1, otherwise more replicas are needed to connect to loki
+      replication_factor: 1
     podLabels:
       app: ces
     storage:
