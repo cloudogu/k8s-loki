@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.9.1-5] - 2024-09-18
+### Changed
+- [#8] Relicense to AGPL-3.0-only
+
 ## [v2.9.1-4] - 2023-12-13
 ### Fixed
 - [#6] Fix structure of patch templates and add missing image for grafana operator.
