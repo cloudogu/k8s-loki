@@ -64,6 +64,28 @@ spec:
         replicas: 3
 ```
 
+### IPv6
+
+In IPv4-only systems it is necessary to disable IPv6. Otherwise, the loki-gateway-pod will not start correctly.
+
+**Example:**
+```yaml
+apiVersion: k8s.cloudogu.com/v1
+kind: Component
+metadata:
+  name: k8s-loki
+  labels:
+    app: ces
+spec:
+  name: k8s-loki
+  namespace: k8s
+  valuesYamlOverwrite: |
+    loki:
+      gateway:
+        nginxConfig:
+          enableIPv6: false
+```
+
 ### Additional configuration
 
 In addition to the standard Loki configuration described above, the `k8s-loki` component has additional configuration:

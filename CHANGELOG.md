@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## Added
+- [#10] Docs how to disable IPv6 with the component custom resource. This is useful in IPv4-only systems.
+ 
 ### Changed
 - [#10] Upgrade helm chart to 6.16.0 and loki to 3.1.1
 
