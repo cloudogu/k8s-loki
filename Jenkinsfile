@@ -54,7 +54,7 @@ node('docker') {
                     stage('Deploy minio') {
                         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'harborhelmchartpush', usernameVariable: 'HARBOR_USERNAME', passwordVariable: 'HARBOR_PASSWORD']]) {
                             k3d.helm("registry login ${registryUrl} --username '${HARBOR_USERNAME}' --password '${HARBOR_PASSWORD}'")
-                            k3d.helm("install k8s-minio oci://${registryUrl}/${registryNamespace}/k8s-minio --version 2023.9.23-3")
+                            k3d.helm("install k8s-minio oci://${registryUrl}/${registryNamespace}/k8s-minio --version 2023.9.23-6")
                         }
                     }
 
