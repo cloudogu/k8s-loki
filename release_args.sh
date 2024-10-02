@@ -64,14 +64,6 @@ update_versions_modify_files() {
   lokiSidecarTag=$(yq '.sidecar.image.tag' < "${lokiTempValues}")
   setAttributeInComponentPatchTemplate ".values.images.sidecar" "${lokiSidecarRegistryRepo}:${lokiSidecarTag}"
 
-  local grafanaAgentRegistry
-  local grafanaAgentRepo
-  local grafanaAgentTag
-  grafanaAgentRegistry=$(yq '.image.registry' < "${grafanaAgentTempValues}")
-  grafanaAgentRepo=$(yq '.image.repository' < "${grafanaAgentTempValues}")
-  grafanaAgentTag=$(yq '.image.tag' < "${grafanaAgentTempValues}")
-  setAttributeInComponentPatchTemplate ".values.images.grafanaAgentOp" "${grafanaAgentRegistry}/${grafanaAgentRepo}:${grafanaAgentTag}"
-
   rm -rf ${lokiTempChart}
 }
 
