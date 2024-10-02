@@ -15,7 +15,7 @@ productionReleaseBranch = "main"
 registryNamespace = "k8s"
 registryUrl = "registry.cloudogu.com"
 
-goVersion = "1.21"
+goVersion = "1.23"
 helmTargetDir = "target/k8s"
 helmChartDir = "${helmTargetDir}/helm"
 
