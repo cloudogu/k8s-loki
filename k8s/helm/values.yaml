@@ -92,6 +92,11 @@ loki:
         index:
           prefix: index_
           period: 24h
+  # Memcaching is actual not needed for our use case and would reserve > 8 GB RAM. If Queries are very slow we can consider to turn this on.
+  chunksCache:
+    enabled: false
+  resultsCache:
+    enabled: false
   #   Enable basic authentication in the Gateway and get the credentials from the provided secret. The credentials must
   #   be encrypted with htpasswd and base64-encoded as follows:
   #   echo "<PASSWORD>" | htpasswd -n -i <USERNAME> | base64 ; echo
