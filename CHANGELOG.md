@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- [#10] Upgrade helm chart to 6.16.0 and loki to 3.1.1
+
+### Fixed
+- A bug where the gateway secret generates new every component upgrade.
 
 ## [v2.9.1-5] - 2024-09-18
 ### Changed

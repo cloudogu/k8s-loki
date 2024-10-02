@@ -15,7 +15,6 @@ metadata:
 spec:
   name: k8s-loki
   namespace: k8s
-  version: 2.9.1-2
 ```
 
 Die neue yaml-Datei kann anschließend im Kubernetes-Cluster erstellt werden:
@@ -53,7 +52,6 @@ metadata:
 spec:
   name: k8s-loki
   namespace: k8s
-  version: 2.9.1-2
   valuesYamlOverwrite: |
     loki:
       write:
