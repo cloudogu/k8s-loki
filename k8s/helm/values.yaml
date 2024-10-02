@@ -109,23 +109,6 @@ loki:
     extraArgs:
       - "-user=$(USER)"
       - "-pass=$(PASS)"
-  monitoring:
-    #   Activates the Grafana agent to enable self-monitoring. However, it does not currently work with authentication
-    #   (see: https://github.com/grafana/loki/issues/10873 ). With the configuration below, a working client is created, but
-    #   another client without authentication information continues to be created automatically, filling the logs with 401
-    #   errors.
-    selfMonitoring:
-      enabled: false
-    #      logsInstance:
-    #        clients:
-    #          - url: http://k8s-loki-gateway.ecosystem.svc.cluster.local/loki/api/v1/push
-    #            basicAuth:
-    #              username:
-    #                name: k8s-loki-gateway-secret
-    #                key: username
-    #              password:
-    #                name: k8s-loki-gateway-secret
-    #                key: password
   # A test to check the Loki-Logging-Stack functionality. Only works with self monitoring enabled.
   test:
     enabled: false
