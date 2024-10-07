@@ -6,7 +6,6 @@ set -o pipefail
 componentTemplateFile=k8s/helm/component-patch-tpl.yaml
 lokiTempChart="/tmp/loki"
 lokiTempValues="${lokiTempChart}/values.yaml"
-grafanaAgentTempValues="${lokiTempChart}/charts/grafana-agent-operator/values.yaml"
 lokiTempChartYaml="${lokiTempChart}/Chart.yaml"
 
 lokiValues="k8s/helm/values.yaml"
@@ -46,8 +45,8 @@ update_versions_modify_files() {
 
   local lokiCanaryRegistry
   local lokiCanaryRepo
-  lokiCanaryRegistry=$(yq '.monitoring.lokiCanary.image.registry' < "${lokiTempValues}")
-  lokiCanaryRepo=$(yq '.monitoring.lokiCanary.image.repository' < "${lokiTempValues}")
+  lokiCanaryRegistry=$(yq '.lokiCanary.image.registry' < "${lokiTempValues}")
+  lokiCanaryRepo=$(yq '.lokiCanary.image.repository' < "${lokiTempValues}")
   setAttributeInComponentPatchTemplate ".values.images.lokiCanary" "${lokiCanaryRegistry}/${lokiCanaryRepo}:${lokiAppVersion}"
 
   local lokiGatewayRegistry
