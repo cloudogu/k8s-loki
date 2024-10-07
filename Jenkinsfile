@@ -1,5 +1,5 @@
 #!groovy
-@Library('github.com/cloudogu/ces-build-lib@1.68.0')
+@Library('github.com/cloudogu/ces-build-lib@2.4.0')
 import com.cloudogu.ces.cesbuildlib.*
 
 git = new Git(this, "cesmarvin")
@@ -15,7 +15,7 @@ productionReleaseBranch = "main"
 registryNamespace = "k8s"
 registryUrl = "registry.cloudogu.com"
 
-goVersion = "1.21"
+goVersion = "1.23"
 helmTargetDir = "target/k8s"
 helmChartDir = "${helmTargetDir}/helm"
 
@@ -54,7 +54,7 @@ node('docker') {
                     stage('Deploy minio') {
                         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'harborhelmchartpush', usernameVariable: 'HARBOR_USERNAME', passwordVariable: 'HARBOR_PASSWORD']]) {
                             k3d.helm("registry login ${registryUrl} --username '${HARBOR_USERNAME}' --password '${HARBOR_PASSWORD}'")
-                            k3d.helm("install k8s-minio oci://${registryUrl}/${registryNamespace}/k8s-minio --version 2023.9.23-3")
+                            k3d.helm("install k8s-minio oci://${registryUrl}/${registryNamespace}/k8s-minio --version 2023.9.23-6")
                         }
                     }
 

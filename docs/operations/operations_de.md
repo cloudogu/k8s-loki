@@ -15,7 +15,6 @@ metadata:
 spec:
   name: k8s-loki
   namespace: k8s
-  version: 2.9.1-2
 ```
 
 Die neue yaml-Datei kann anschließend im Kubernetes-Cluster erstellt werden:
@@ -53,7 +52,6 @@ metadata:
 spec:
   name: k8s-loki
   namespace: k8s
-  version: 2.9.1-2
   valuesYamlOverwrite: |
     loki:
       write:
@@ -62,6 +60,28 @@ spec:
         replicas: 3
       backend:
         replicas: 3
+```
+
+### IPv6
+
+In IPv4-only-Systemen ist es notwendig IPv6 zu deaktivieren. Ansonsten wird der loki-gateway-pod nicht starten.
+
+**Beispiel:**
+```yaml
+apiVersion: k8s.cloudogu.com/v1
+kind: Component
+metadata:
+  name: k8s-loki
+  labels:
+    app: ces
+spec:
+  name: k8s-loki
+  namespace: k8s
+  valuesYamlOverwrite: |
+    loki:
+      gateway:
+        nginxConfig:
+          enableIPv6: false
 ```
 
 ### Zusätzliche Konfiguration
