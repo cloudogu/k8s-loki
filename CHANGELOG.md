@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.1.1-1] - 2024-10-07
+## Added
+- [#10] Docs how to disable IPv6 with the component custom resource. This is useful in IPv4-only systems.
+ 
+### Changed
+- [#10] Upgrade helm chart to 6.16.0 and loki to 3.1.1
+
+### Fixed
+- A bug where the gateway secret generates new every component upgrade.
+
 ## [v2.9.1-5] - 2024-09-18
 ### Changed
 - [#8] Relicense to AGPL-3.0-only
