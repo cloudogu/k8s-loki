@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Fixed
-- [#12] Path for lokiCanary Image in patch templates.
+- [#12] Path for lokiCanary image in patch templates.
 
 ## [v3.1.1-1] - 2024-10-07
 ## Added
