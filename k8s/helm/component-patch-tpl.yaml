@@ -18,12 +18,11 @@ patches:
           registry: "{{ registryFrom .images.loki }}"
           repository: "{{ repositoryFrom .images.loki }}"
           tag: "{{ tagFrom .images.loki }}"
-      monitoring:
-        lokiCanary:
-          image:
-            registry: "{{ registryFrom .images.lokiCanary }}"
-            repository: "{{ repositoryFrom .images.lokiCanary }}"
-            tag: "{{ tagFrom .images.lokiCanary }}"
+      lokiCanary:
+        image:
+          registry: "{{ registryFrom .images.lokiCanary }}"
+          repository: "{{ repositoryFrom .images.lokiCanary }}"
+          tag: "{{ tagFrom .images.lokiCanary }}"
       gateway:
         image:
           registry: "{{ registryFrom .images.gateway }}"
