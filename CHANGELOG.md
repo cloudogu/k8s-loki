@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.1.1-2] - 2024-10-17
+### Fixed
+- [#12] Path for lokiCanary image in patch templates.
+
 ## [v3.1.1-1] - 2024-10-07
 ## Added
 - [#10] Docs how to disable IPv6 with the component custom resource. This is useful in IPv4-only systems.
