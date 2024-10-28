@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.1.1-3] - 2024-10-28
+### Changed
+- [#14] Use `ces-container-registries` secret for pulling container images as default.
+
 ## [v3.1.1-2] - 2024-10-17
 ### Fixed
 - [#12] Path for lokiCanary image in patch templates.
