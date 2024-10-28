@@ -2,7 +2,7 @@ lokiGatewaySecretName: "k8s-loki-gateway-secret"
 
 loki:
   imagePullSecrets:
-    - "ces-container-registries"
+    - name: "ces-container-registries"
   nameOverride: "k8s-loki"
   kubectlImage:
     registry: docker.io
