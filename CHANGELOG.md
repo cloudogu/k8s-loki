@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.1.1-4] - 2024-11-13
+### Changed
+- [#16] Disable sidecar to load rules from ConfigMaps/Secrets.
+  - This improves security as it also removes cluster-wide permissions for ConfigMaps/Secrets.
+
 ## [v3.1.1-3] - 2024-10-28
 ### Changed
 - [#14] Use `ces-container-registries` secret for pulling container images as default.
