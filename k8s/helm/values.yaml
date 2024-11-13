@@ -129,3 +129,8 @@ loki:
   # A test to check the Loki-Logging-Stack functionality. Only works with self monitoring enabled.
   test:
     enabled: false
+  sidecar:
+    rules:
+      # We don't need a sidecar to ingest rule from specific ConfigMaps and/or Secrets.
+      # This allows us to restrict permissions to ConfigMaps and Secrets.
+      enabled: false
