@@ -33,59 +33,13 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: "k8s-loki-backend-ingress"
+  name: "k8s-loki-internal-ingress"
   namespace: {{ $.Release.Namespace }}
   labels:
     app: ces
     app.kubernetes.io/name: k8s-loki
 spec:
   podSelector:
-    matchLabels:
-      app: ces
-      app.kubernetes.io/name: k8s-loki
-      app.kubernetes.io/component: backend
-  policyTypes:
-    - Ingress
-  ingress:
-    - from:
-        - podSelector:
-            matchLabels:
-              app: ces
-              app.kubernetes.io/name: k8s-loki
-              app.kubernetes.io/component: gateway
-      ports:
-        - protocol: TCP
-          port: 3100
-        - protocol: TCP
-          port: 9095
-    - from:
-        - podSelector:
-            matchLabels:
-              app: ces
-              app.kubernetes.io/name: k8s-loki
-              app.kubernetes.io/component: read
-      ports:
-        - protocol: TCP
-          port: 7946
-        - protocol: TCP
-          port: 9095
----
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: "k8s-loki-read-write-ingress"
-  namespace: {{ $.Release.Namespace }}
-  labels:
-    app: ces
-    app.kubernetes.io/name: k8s-loki
-spec:
-  podSelector:
-    matchExpressions:
-      - key: app.kubernetes.io/component
-        operator: In
-        values:
-          - read
-          - write
     matchLabels:
       app: ces
       app.kubernetes.io/name: k8s-loki
@@ -97,25 +51,7 @@ spec:
             matchLabels:
               app: ces
               app.kubernetes.io/name: k8s-loki
-              app.kubernetes.io/component: gateway
-      ports:
-        - protocol: TCP
-          port: 3100
----
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: "k8s-loki-canary-ingress"
-  namespace: {{ $.Release.Namespace }}
-  labels:
-    app: ces
-    app.kubernetes.io/name: k8s-loki
-spec:
-  podSelector:
-    matchLabels:
-      app: ces
-      app.kubernetes.io/name: k8s-loki
-      app.kubernetes.io/component: canary
-  policyTypes:
-    - Ingress
+          namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: {{ $.Release.Namespace }}
 {{- end}}
