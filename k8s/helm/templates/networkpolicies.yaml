@@ -17,15 +17,12 @@ spec:
   ingress:
     - from:
         - podSelector:
-            matchExpressions:
-              - key: app.kubernetes.io/component
-                operator: In
-                values:
-                  - read
-                  - write
             matchLabels:
               app: ces
               app.kubernetes.io/name: k8s-loki
+          namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: {{ $.Release.Namespace }}
       ports:
         - protocol: TCP
           port: 9000
