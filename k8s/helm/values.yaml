@@ -1,4 +1,6 @@
 lokiGatewaySecretName: "k8s-loki-gateway-secret"
+networkPolicies:
+  enabled: true
 
 loki:
   imagePullSecrets:
