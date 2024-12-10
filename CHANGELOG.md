@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.1.1-5] - 2024-12-10
+### Added
+- [#18] NetworkPolicy to allow only internal ingress traffic
+  - Dependent Dogus and Components must bring their own NetworkPolicy to access Loki
+- [#18] Ingress Network Policy for MinIO so that Loki can access it
+
 ## [v3.1.1-4] - 2024-11-13
 ### Changed
 - [#16] Disable sidecar to load rules from ConfigMaps/Secrets.

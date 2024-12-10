@@ -1,0 +1,57 @@
+{{- if .Values.networkPolicies.enabled }}
+# This NetworkPolicy allows ingress to MinIO pods from Loki.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: "k8s-loki-minio-ingress"
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    app: ces
+    app.kubernetes.io/name: k8s-loki
+spec:
+  podSelector:
+    matchLabels:
+      app: ces
+      app.kubernetes.io/name: k8s-minio
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: ces
+              app.kubernetes.io/name: k8s-loki
+          namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: {{ $.Release.Namespace }}
+      ports:
+        - protocol: TCP
+          port: 9000
+---
+# This NetworkPolicy only allows internal ingress between Loki pods and denies all other ingress.
+# Dependent Dogus and Components must bring their own NetworkPolicy to access Loki.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: "k8s-loki-internal-ingress"
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    app: ces
+    app.kubernetes.io/name: k8s-loki
+spec:
+  podSelector:
+    matchLabels:
+      app: ces
+      app.kubernetes.io/name: k8s-loki
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: ces
+              app.kubernetes.io/name: k8s-loki
+          namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: {{ $.Release.Namespace }}
+{{- end}}
