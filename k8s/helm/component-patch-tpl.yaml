@@ -5,7 +5,7 @@ values:
     loki: docker.io/grafana/loki:3.3.2
     lokiCanary: docker.io/grafana/loki-canary:3.3.2
     gateway: docker.io/nginxinc/nginx-unprivileged:1.27-alpine
-    sidecar: kiwigrid/k8s-sidecar:1.28.4
+    sidecar: kiwigrid/k8s-sidecar:1.28.0
 patches:
   values.yaml:
     loki:
