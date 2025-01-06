@@ -2,10 +2,10 @@ apiVersion: v1
 values:
   images:
     kubectl: docker.io/bitnami/kubectl:1.28.4
-    loki: docker.io/grafana/loki:3.1.1
-    lokiCanary: docker.io/grafana/loki-canary:3.1.1
+    loki: docker.io/grafana/loki:3.3.2
+    lokiCanary: docker.io/grafana/loki-canary:3.3.2
     gateway: docker.io/nginxinc/nginx-unprivileged:1.27-alpine
-    sidecar: kiwigrid/k8s-sidecar:1.27.5
+    sidecar: kiwigrid/k8s-sidecar:1.28.4
 patches:
   values.yaml:
     loki:
