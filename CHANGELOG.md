@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.3.2-1] - 2025-01-06
+### Changed
+- [#20] Update loki helm chart to 6.24.0 to fix CVE-2024-45337
+
 ## [v3.1.1-5] - 2024-12-10
 ### Added
 - [#18] NetworkPolicy to allow only internal ingress traffic
