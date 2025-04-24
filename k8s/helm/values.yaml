@@ -28,6 +28,12 @@ loki:
             key: accessKeySecret
     persistence:
       size: 1Gi
+    resources:
+      limits:
+        memory: 250M
+      requests:
+        cpu: 35m
+        memory: 250M
   read:
     replicas: 1
     extraArgs:
@@ -43,6 +49,12 @@ loki:
           secretKeyRef:
             name: k8s-minio-service-account-loki
             key: accessKeySecret
+    resources:
+      limits:
+        memory: 184M
+      requests:
+        cpu: 23m
+        memory: 184M
   backend:
     replicas: 1
     extraArgs:
@@ -60,6 +72,12 @@ loki:
             key: accessKeySecret
     persistence:
       size: 1Gi
+    resources:
+      limits:
+        memory: 145M
+      requests:
+        cpu: 15m
+        memory: 145M
 
   # Loki configuration.
   loki:
@@ -109,6 +127,12 @@ loki:
     basicAuth:
       enabled: true
       existingSecret: k8s-loki-gateway-secret
+    resources:
+      limits:
+        memory: 105M
+      requests:
+        cpu: 350m
+        memory: 105M
   #   Loki Canary is a standalone app that audits the log-capturing performance of a Grafana Loki cluster.
   #   Loki Canary generates artificial log lines. These log lines are sent to the Loki cluster.
   lokiCanary:
@@ -128,6 +152,12 @@ loki:
     extraArgs:
       - "-user=$(USER)"
       - "-pass=$(PASS)"
+    resources:
+      limits:
+        memory: 105M
+      requests:
+        cpu: 15m
+        memory: 105M
   # A test to check the Loki-Logging-Stack functionality. Only works with self monitoring enabled.
   test:
     enabled: false
