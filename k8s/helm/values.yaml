@@ -30,10 +30,10 @@ loki:
       size: 1Gi
     resources:
       limits:
-        memory: 184M
+        memory: 250M
       requests:
         cpu: 35m
-        memory: 184M
+        memory: 250M
   read:
     replicas: 1
     extraArgs:
