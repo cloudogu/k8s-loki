@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Changed
 - [#24] Update Makefiles to 10.2.0
+### Added 
+- [#24] Configure Log-Level for sidecars via Value-Mapping
 
 ## [v3.3.2-2] - 2025-04-24
 ### Changed
