@@ -86,6 +86,8 @@ loki:
       replication_factor: 1
     podLabels:
       app: ces
+    server:
+      log_level: info
     storage:
       #      chunks seems to be the important one, but it is good practice to set all three.
       bucketNames:
@@ -166,5 +168,3 @@ loki:
       # We don't need a sidecar to ingest rule from specific ConfigMaps and/or Secrets.
       # This allows us to restrict permissions to ConfigMaps and Secrets.
       enabled: false
-      # Set LogLevel for sidecars https://grafana.com/docs/loki/latest/setup/install/helm/reference/
-      logLevel: info

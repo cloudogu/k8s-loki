@@ -5,7 +5,7 @@ metavalues:
     name: Log-Level
     description: The central configuration value to set the log level for this component
     keys:
-      - path: loki.sidecar.rules.logLevel
+      - path: loki.loki.server.log_level
         mapping:
           debug: debug
           info: info
