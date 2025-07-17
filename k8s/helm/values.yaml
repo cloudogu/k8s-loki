@@ -86,6 +86,8 @@ loki:
       replication_factor: 1
     podLabels:
       app: ces
+    server:
+      log_level: info
     storage:
       #      chunks seems to be the important one, but it is good practice to set all three.
       bucketNames:
