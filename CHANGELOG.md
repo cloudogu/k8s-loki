@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.3.2-5] - 2025-09-25
+### Changed
+- [#28] Increase memory request and limit for read pod to 400Mib. This is needed for creating big support-archives.
+
 ## [v3.3.2-4] - 2025-08-25
 ### Changed
 - [#26] Use "bitnamilegacy" images instead of "bitnami"
