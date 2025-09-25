@@ -51,10 +51,10 @@ loki:
             key: accessKeySecret
     resources:
       limits:
-        memory: 184M
+        memory: 400M
       requests:
         cpu: 23m
-        memory: 184M
+        memory: 400M
   backend:
     replicas: 1
     extraArgs:
