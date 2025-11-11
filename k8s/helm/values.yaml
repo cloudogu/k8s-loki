@@ -8,8 +8,8 @@ loki:
   nameOverride: "k8s-loki"
   kubectlImage:
     registry: docker.io
-    repository: bitnamilegacy/kubectl
-    tag: 1.28.4
+    repository: alpine/kubectl
+    tag: 1.34.1
   # Loki Write, Read and Backend are setting environment variables to for the minio access keys.
   write:
     replicas: 1
