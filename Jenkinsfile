@@ -42,14 +42,6 @@ node('docker') {
                                     stage("Lint helm") {
                                         make 'helm-lint'
                                     }
-
-                                    stage('Trivy scan') {
-                                        Trivy trivy = new Trivy(this)
-                                        trivy.scanImage(localImageName, TrivySeverityLevel.CRITICAL, TrivyScanStrategy.UNSTABLE)
-                                        trivy.saveFormattedTrivyReport(TrivyScanFormat.TABLE)
-                                        trivy.saveFormattedTrivyReport(TrivyScanFormat.JSON)
-                                        trivy.saveFormattedTrivyReport(TrivyScanFormat.HTML)
-                                    }
                                 }
 
                 K3d k3d = new K3d(this, "${WORKSPACE}", "${WORKSPACE}/k3d", env.PATH)
@@ -75,6 +67,15 @@ node('docker') {
                         // in error "no matching resource found when run the wait command"
                         sleep(20)
                         k3d.kubectl("wait --for=condition=ready pod -l app.kubernetes.io/instance=k8s-loki --timeout=300s")
+                    }
+
+                    stage('Trivy scan') {
+                        String version = makefile.getVersion()
+                        Trivy trivy = new Trivy(this)
+                        trivy.scanImage("cloudogu/${repositoryName}:${version}", TrivySeverityLevel.CRITICAL, TrivyScanStrategy.UNSTABLE)
+                        trivy.saveFormattedTrivyReport(TrivyScanFormat.TABLE)
+                        trivy.saveFormattedTrivyReport(TrivyScanFormat.JSON)
+                        trivy.saveFormattedTrivyReport(TrivyScanFormat.HTML)
                     }
                 } catch(Exception e) {
                     k3d.collectAndArchiveLogs()
