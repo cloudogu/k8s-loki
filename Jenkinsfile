@@ -49,6 +49,7 @@ node('docker') {
                                         trivy.saveFormattedTrivyReport(TrivyScanFormat.TABLE)
                                         trivy.saveFormattedTrivyReport(TrivyScanFormat.JSON)
                                         trivy.saveFormattedTrivyReport(TrivyScanFormat.HTML)
+                                    }
                                 }
 
                 K3d k3d = new K3d(this, "${WORKSPACE}", "${WORKSPACE}/k3d", env.PATH)
