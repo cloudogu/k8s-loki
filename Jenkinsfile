@@ -15,7 +15,8 @@ productionReleaseBranch = "main"
 registryNamespace = "k8s"
 registryUrl = "registry.cloudogu.com"
 
-goVersion = "1.26"
+makefile = new Makefile(this)
+goVersion = "1.26.0"
 helmTargetDir = "target/k8s"
 helmChartDir = "${helmTargetDir}/helm"
 
@@ -67,6 +68,21 @@ node('docker') {
                         // in error "no matching resource found when run the wait command"
                         sleep(20)
                         k3d.kubectl("wait --for=condition=ready pod -l app.kubernetes.io/instance=k8s-loki --timeout=300s")
+                    }
+
+                    def imageName = ""
+                    String version = makefile.getVersion()
+                    stage('Build & Push Image') {
+                        imageName = k3d.buildAndPushToLocalRegistry("cloudogu/${repositoryName}", version)
+                    }
+
+                    stage('Trivy scan') {
+                        Trivy trivy = new Trivy(this)
+                        // We do not build the dogu in the single node ecosystem, therefore we just use scanImage here with the build from the k3s step.
+                        trivy.scanImage("cloudogu/${repositoryName}:${version}", params.TrivySeverityLevels, params.TrivyStrategy)
+                        trivy.saveFormattedTrivyReport(TrivyScanFormat.TABLE)
+                        trivy.saveFormattedTrivyReport(TrivyScanFormat.JSON)
+                        trivy.saveFormattedTrivyReport(TrivyScanFormat.HTML)
                     }
 
                 } catch(Exception e) {
