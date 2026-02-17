@@ -16,6 +16,7 @@ registryNamespace = "k8s"
 registryUrl = "registry.cloudogu.com"
 
 goVersion = "1.26"
+makefile = new Makefile(this)
 helmTargetDir = "target/k8s"
 helmChartDir = "${helmTargetDir}/helm"
 
