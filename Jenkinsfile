@@ -15,7 +15,6 @@ productionReleaseBranch = "main"
 registryNamespace = "k8s"
 registryUrl = "registry.cloudogu.com"
 
-makefile = new Makefile(this)
 goVersion = "1.26.0"
 helmTargetDir = "target/k8s"
 helmChartDir = "${helmTargetDir}/helm"
@@ -69,7 +68,6 @@ node('docker') {
                         sleep(20)
                         k3d.kubectl("wait --for=condition=ready pod -l app.kubernetes.io/instance=k8s-loki --timeout=300s")
                     }
-
                 } catch(Exception e) {
                     k3d.collectAndArchiveLogs()
                     throw e as java.lang.Throwable
