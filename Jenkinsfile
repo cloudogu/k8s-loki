@@ -15,7 +15,7 @@ productionReleaseBranch = "main"
 registryNamespace = "k8s"
 registryUrl = "registry.cloudogu.com"
 
-goVersion = "1.23"
+goVersion = "1.26"
 helmTargetDir = "target/k8s"
 helmChartDir = "${helmTargetDir}/helm"
 
@@ -42,6 +42,13 @@ node('docker') {
                                     stage("Lint helm") {
                                         make 'helm-lint'
                                     }
+
+                                    stage('Trivy scan') {
+                                        Trivy trivy = new Trivy(this)
+                                        trivy.scanImage(localImageName, TrivySeverityLevel.CRITICAL, TrivyScanStrategy.UNSTABLE)
+                                        trivy.saveFormattedTrivyReport(TrivyScanFormat.TABLE)
+                                        trivy.saveFormattedTrivyReport(TrivyScanFormat.JSON)
+                                        trivy.saveFormattedTrivyReport(TrivyScanFormat.HTML)
                                 }
 
                 K3d k3d = new K3d(this, "${WORKSPACE}", "${WORKSPACE}/k3d", env.PATH)
