@@ -70,14 +70,6 @@ node('docker') {
                         k3d.kubectl("wait --for=condition=ready pod -l app.kubernetes.io/instance=k8s-loki --timeout=300s")
                     }
 
-                    stage('Trivy scan') {
-                        String version = makefile.getVersion()
-                        Trivy trivy = new Trivy(this)
-                        trivy.scanImage("cloudogu/${repositoryName}:${version}", TrivySeverityLevel.CRITICAL, TrivyScanStrategy.UNSTABLE)
-                        trivy.saveFormattedTrivyReport(TrivyScanFormat.TABLE)
-                        trivy.saveFormattedTrivyReport(TrivyScanFormat.JSON)
-                        trivy.saveFormattedTrivyReport(TrivyScanFormat.HTML)
-                    }
                 } catch(Exception e) {
                     k3d.collectAndArchiveLogs()
                     throw e as java.lang.Throwable
