@@ -3,6 +3,7 @@ networkPolicies:
   enabled: true
 
 loki:
+  deploymentMode: SingleBinary
   imagePullSecrets:
     - name: "ces-container-registries"
   nameOverride: "k8s-loki"
