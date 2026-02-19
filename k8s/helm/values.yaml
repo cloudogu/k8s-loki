@@ -27,6 +27,15 @@ loki:
       requests:
         cpu: 75m
         memory: 1Gi
+    compactor:
+      working_directory: /var/loki/compactor
+      compaction_interval: 10m
+      delete_request_store: filesystem
+      retention_enabled: true
+      retention_delete_delay: 12h    #  delay before physical deletion
+    limits_config:
+      deletion_mode: filter-and-delete
+      retention_period: 168h        # Logs older than 7 days will be deleted
     persistence:
       enabled: true
       size: 10Gi
