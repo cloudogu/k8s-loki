@@ -4,6 +4,8 @@ networkPolicies:
 
 loki:
   deploymentMode: SingleBinary
+  singleBinary:
+    replicas: 1
   imagePullSecrets:
     - name: "ces-container-registries"
   nameOverride: "k8s-loki"
@@ -19,53 +21,33 @@ loki:
     replicas: 1
     extraArgs:
       - '-config.expand-env=true'
-    extraEnv:
-      - name: MINIO_LOKI_ACCESS_KEY_ID
-        valueFrom:
-          secretKeyRef:
-            name: k8s-minio-service-account-loki
-            key: accessKeyId
-      - name: MINIO_LOKI_SECRET_ACCESS_KEY
-        valueFrom:
-          secretKeyRef:
-            name: k8s-minio-service-account-loki
-            key: accessKeySecret
     resources:
       limits:
         memory: 1Gi
       requests:
         cpu: 75m
         memory: 1Gi
-      persistence:
-        enabled: true
-        size: 2Gi # Combined size for WAL and Compactor storage
+    persistence:
+      enabled: true
+      size: 10Gi
+      mountPath: /var/loki
     podLabels:
       app: ces
     server:
       log_level: info
     storage:
+      type: filesystem
       #      chunks seems to be the important one, but it is good practice to set all three.
-      bucketNames:
-        chunks: loki-log-bucket
-        admin: loki-log-bucket
-        ruler: loki-log-bucket
-      #     configure storage option (minio in this case).
-      type: s3
-      s3:
-        s3: null
-        endpoint: http://k8s-minio.ecosystem.svc:9000
-        region: null
-        s3ForcePathStyle: true
-        insecure: true
-        accessKeyId: ${MINIO_LOKI_ACCESS_KEY_ID}
-        secretAccessKey: ${MINIO_LOKI_SECRET_ACCESS_KEY}
+      filesystem:
+        chunks_directory: /var/loki/chunks
+        rules_directory: /var/loki/rules
     #   Relevant for multi-tenant mode
     auth_enabled: false
     # Append mandatory schema config for Loki > 3.x
     schemaConfig:
       configs:
       - from: 2024-10-02
-        object_store: s3
+        object_store: filesystem
         store: tsdb
         schema: v13
         index:
@@ -76,6 +58,13 @@ loki:
     enabled: false
   resultsCache:
     enabled: false
+  # Zero out replica counts of other deployment modes
+  backend:
+    replicas: 0
+  read:
+    replicas: 0
+  write:
+    replicas: 0
   #   Enable basic authentication in the Gateway and get the credentials from the provided secret. The credentials must
   #   be encrypted with htpasswd and base64-encoded as follows:
   #   echo "<PASSWORD>" | htpasswd -n -i <USERNAME> | base64 ; echo
