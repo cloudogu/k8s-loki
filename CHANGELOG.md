@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.5.10-1] - 2026-03-05
+### Security
+- [#32] Fix Golang stdlib CVE-2025-68121
+### Changed
+- [#32] Update loki image to 3.5.10
+- [#34] Use monolithic deployment mode instead of simple scalable mode
+- [#34] Use file system storage instead of minio s3 storage
+
 ## [v3.3.2-6] - 2025-11-11
 ### Changed
 - [#30] Use kubectl image `alpine/kubectl` instead of `bitnamilegacy/kubectl` to avoid CVEs.
