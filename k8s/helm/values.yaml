@@ -46,7 +46,6 @@ loki:
       log_level: info
     storage:
       type: filesystem
-      #      chunks seems to be the important one, but it is good practice to set all three.
       filesystem:
         chunks_directory: /var/loki/chunks
         rules_directory: /var/loki/rules
