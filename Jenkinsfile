@@ -1,5 +1,5 @@
 #!groovy
-@Library('github.com/cloudogu/ces-build-lib@3.0.0')
+@Library('github.com/cloudogu/ces-build-lib@5.1.0')
 import com.cloudogu.ces.cesbuildlib.*
 
 git = new Git(this, "cesmarvin")
@@ -15,7 +15,7 @@ productionReleaseBranch = "main"
 registryNamespace = "k8s"
 registryUrl = "registry.cloudogu.com"
 
-goVersion = "1.23"
+goVersion = "1.26.0"
 helmTargetDir = "target/k8s"
 helmChartDir = "${helmTargetDir}/helm"
 
