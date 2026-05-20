@@ -18,7 +18,6 @@ spec:
   policyTypes:
     - Ingress
   ingress:
-    # Rule 1: Allow internal Loki traffic
     - from:
         - podSelector:
             matchLabels:
