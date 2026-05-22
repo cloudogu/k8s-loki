@@ -1,6 +1,25 @@
 {{- if .Values.networkPolicies.enabled }}
 # ==========================================
-# POLICY 1: Internal Loki-to-Loki Traffic
+# POLICY 1: Disallow all ingress
+# ==========================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: "k8s-loki-deny-all"
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    app: ces
+    app.kubernetes.io/name: k8s-loki
+spec:
+  podSelector:
+    matchLabels:
+      app: ces
+      app.kubernetes.io/name: k8s-loki
+  policyTypes:
+    - Ingress
+  ingress: []
+# ==========================================
+# POLICY 2: Allow Loki-to-Loki Traffic
 # ==========================================
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -28,7 +47,7 @@ spec:
               kubernetes.io/metadata.name: {{ $.Release.Namespace }}
 ---
 # ==========================================
-# POLICY 2: External Grafana-to-Loki Traffic
+# POLICY 3: Allow External Grafana-to-Loki Traffic
 # ==========================================
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
