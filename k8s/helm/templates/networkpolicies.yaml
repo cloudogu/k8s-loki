@@ -1,6 +1,26 @@
 {{- if .Values.networkPolicies.enabled }}
-# This NetworkPolicy only allows internal ingress between Loki pods and denies all other ingress.
-# Dependent Dogus and Components must bring their own NetworkPolicy to access Loki.
+# ==========================================
+# POLICY 1: Disallow all ingress
+# ==========================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: "k8s-loki-deny-all"
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    app: ces
+    app.kubernetes.io/name: k8s-loki
+spec:
+  podSelector:
+    matchLabels:
+      app: ces
+      app.kubernetes.io/name: k8s-loki
+  policyTypes:
+    - Ingress
+  ingress: []
+# ==========================================
+# POLICY 2: Allow Loki-to-Loki Traffic
+# ==========================================
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -25,4 +45,35 @@ spec:
           namespaceSelector:
             matchLabels:
               kubernetes.io/metadata.name: {{ $.Release.Namespace }}
+---
+# ==========================================
+# POLICY 3: Allow External Grafana-to-Loki Traffic
+# ==========================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: "k8s-loki-grafana-ingress"
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    app: ces
+    app.kubernetes.io/name: k8s-loki
+spec:
+  podSelector:
+    matchLabels:
+      app: ces
+      app.kubernetes.io/name: k8s-loki
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: ces
+              dogu.name: grafana
+          namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: {{ $.Release.Namespace }}
+      ports:
+        - protocol: TCP
+          port: 3100
 {{- end}}

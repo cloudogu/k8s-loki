@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.5.10-2] - 2026-06-04
+### Added
+- [#36] Added network policy to allow access from Grafana to Loki
+
 ## [v3.5.10-1] - 2026-03-05
 ### Security
 - [#32] Fix Golang stdlib CVE-2025-68121
