@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.5.10-3] - 2026-07-15
+### Changed
+- [#39] Reduce logging by disable verbose logging in gateway and set log level to warn for the main loki pod.
+
 ## [v3.5.10-2] - 2026-06-04
 ### Added
 - [#36] Added network policy to allow access from Grafana to Loki

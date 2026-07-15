@@ -43,7 +43,7 @@ loki:
     podLabels:
       app: ces
     server:
-      log_level: info
+      log_level: warn
     storage:
       type: filesystem
       filesystem:
@@ -78,6 +78,7 @@ loki:
   #   echo "<PASSWORD>" | htpasswd -n -i <USERNAME> | base64 ; echo
   #   Fill the "data -> .htpasswd" field in the secret with the corresponding value.
   gateway:
+    verboseLogging: false
     basicAuth:
       enabled: true
       existingSecret: k8s-loki-gateway-secret
