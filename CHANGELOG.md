@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.7.8-1] - 2026-09-22
+### Changed
+- [#41] Update loki helm chart to 18.13.4
+
 ## [v3.5.10-3] - 2026-07-15
 ### Changed
 - [#39] Reduce logging by disable verbose logging in gateway and set log level to warn for the main loki pod.
