@@ -3,21 +3,8 @@ networkPolicies:
   enabled: true
 
 loki:
-  deploymentMode: SingleBinary
+  deploymentMode: Monolithic
   singleBinary:
-    replicas: 1
-  imagePullSecrets:
-    - name: "ces-container-registries"
-  nameOverride: "k8s-loki"
-  kubectlImage:
-    registry: docker.io
-    repository: alpine/kubectl
-    tag: 1.34.1
-  # Loki configuration.
-  loki:
-    commonConfig:
-      # set to 1, otherwise more replicas are needed to connect to loki
-      replication_factor: 1
     replicas: 1
     extraArgs:
       - '-config.expand-env=true'
@@ -27,6 +14,28 @@ loki:
       requests:
         cpu: 75m
         memory: 1Gi
+    persistence:
+      enabled: true
+      size: 10Gi
+      mountPath: /var/loki
+    podLabels:
+      app: ces
+  imagePullSecrets:
+    - name: "ces-container-registries"
+  nameOverride: "k8s-loki"
+  kubectlImage:
+    registry: docker.io
+    repository: alpine/kubectl
+    tag: 1.37.0
+  # Loki configuration.
+  loki:
+    commonConfig:
+      # set to 1, otherwise more replicas are needed to connect to loki
+      replication_factor: 1
+      # do not use memberlist ring with http because we use Monolithic mode
+      ring:
+        kvstore:
+          store: inmemory
     compactor:
       working_directory: /var/loki/compactor
       compaction_interval: 10m
@@ -36,10 +45,6 @@ loki:
     limits_config:
       deletion_mode: filter-and-delete
       retention_period: 168h        # Logs older than 7 days will be deleted
-    persistence:
-      enabled: true
-      size: 10Gi
-      mountPath: /var/loki
     podLabels:
       app: ces
     server:
@@ -88,6 +93,8 @@ loki:
       requests:
         cpu: 350m
         memory: 105M
+    metrics:
+      enabled: false
   #   Loki Canary is a standalone app that audits the log-capturing performance of a Grafana Loki cluster.
   #   Loki Canary generates artificial log lines. These log lines are sent to the Loki cluster.
   lokiCanary:
