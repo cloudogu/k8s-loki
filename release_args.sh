@@ -39,15 +39,19 @@ update_versions_modify_files() {
 
   local lokiImageRegistry
   local lokiImageRepo
+  local lokiImageTag
   lokiImageRegistry=$(.bin/yq '.loki.image.registry' < "${lokiTempValues}")
   lokiImageRepo=$(.bin/yq '.loki.image.repository' < "${lokiTempValues}")
-  setAttributeInComponentPatchTemplate ".values.images.loki" "${lokiImageRegistry}/${lokiImageRepo}:${lokiAppVersion}"
+  lokiImageTag=$(.bin/yq '.loki.loki.image.tag // ""' < "${lokiValues}")
+  setAttributeInComponentPatchTemplate ".values.images.loki" "${lokiImageRegistry}/${lokiImageRepo}:${lokiImageTag:-${lokiAppVersion}}"
 
   local lokiCanaryRegistry
   local lokiCanaryRepo
+  local lokiCanaryTag
   lokiCanaryRegistry=$(.bin/yq '.lokiCanary.image.registry' < "${lokiTempValues}")
   lokiCanaryRepo=$(.bin/yq '.lokiCanary.image.repository' < "${lokiTempValues}")
-  setAttributeInComponentPatchTemplate ".values.images.lokiCanary" "${lokiCanaryRegistry}/${lokiCanaryRepo}:${lokiAppVersion}"
+  lokiCanaryTag=$(.bin/yq '.loki.lokiCanary.image.tag // ""' < "${lokiValues}")
+  setAttributeInComponentPatchTemplate ".values.images.lokiCanary" "${lokiCanaryRegistry}/${lokiCanaryRepo}:${lokiCanaryTag:-${lokiAppVersion}}"
 
   local lokiGatewayRegistry
   local lokiGatewayRepo
