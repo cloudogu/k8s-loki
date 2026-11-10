@@ -29,6 +29,8 @@ loki:
     tag: 1.37.0
   # Loki configuration.
   loki:
+    image:
+      tag: "3.7.9"
     commonConfig:
       # set to 1, otherwise more replicas are needed to connect to loki
       replication_factor: 1
@@ -98,6 +100,8 @@ loki:
   #   Loki Canary is a standalone app that audits the log-capturing performance of a Grafana Loki cluster.
   #   Loki Canary generates artificial log lines. These log lines are sent to the Loki cluster.
   lokiCanary:
+    image:
+      tag: "3.7.9"
     podLabels:
       app: ces
     extraEnv:

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.7.9-1] - 2026-11-10
+
+### Changed
+- [#43] Update Loki and Loki Canary to 3.7.9 
+
 ## [v3.7.8-1] - 2026-09-22
 ### Changed
 - [#41] Update loki helm chart to 18.13.4
